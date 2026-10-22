@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Spam Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <div class="icon">📧</div>
+
+        <h1>Email Spam Detector</h1>
+        <p class="subtitle">
+            Check whether an email is spam or safe using Machine Learning.
+        </p>
+
+        <form action="/" method="POST" id="emailForm">
+            <label for="email">Enter your email message</label>
+
+            <textarea
+                id="email"
+                name="email"
+                placeholder="Paste your email message here..."
+                required
+            >{{ email_text or '' }}</textarea>
+
+            <div class="button-group">
+                <button type="submit" class="check-btn">
+                    🔍 Check Email
+                </button>
+
+                <button
+                    type="button"
+                    class="reset-btn"
+                    onclick="window.location.href='/'"
+                >
+                    ↻ Reset
+                </button>
+            </div>
+        </form>
+
+        {% if result %}
+        <div class="result-box {{ 'spam' if result == 'Spam' else 'safe' }}">
+            {% if result == 'Spam' %}
+                <div class="result-icon">⚠️</div>
+                <h2>Spam Detected!</h2>
+                <p>This email looks suspicious. Be careful before clicking links or sharing information.</p>
+            {% else %}
+                <div class="result-icon">✅</div>
+                <h2>Email Looks Safe!</h2>
+                <p>This email does not appear to be spam according to our model.</p>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <p class="footer">
+            🛡️ Powered by Python, Flask & Machine Learning
+        </p>
+    </div>
+
+</body>
+</html>
